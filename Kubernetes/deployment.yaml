@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: first-k8s-deploy
+  name: first-k8s-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: first-k8s-deploy
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: first-k8s-deploy
+    spec:
+      containers:
+        - image: webtest
+          imagePullPolicy: IfNotPresent
+          name: web-test
+          resources: {}
