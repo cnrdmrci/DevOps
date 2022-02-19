@@ -42,4 +42,3 @@ networks:
   gitlab:
     name: gitlab-network
 
-# copy network_mode = "gitlab-network" to runner/gitlab-runner/config.toml
