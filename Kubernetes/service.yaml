@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: first-k8s-service
+spec:
+  type: NodePort
+  ports:
+    - port: 5076
+      targetPort: 5076
+      nodePort: 30700
+  selector:
+    app: first-k8s-deploy
