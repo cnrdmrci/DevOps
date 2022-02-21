@@ -20,3 +20,14 @@ spec:
           imagePullPolicy: IfNotPresent
           name: web-test
           resources: {}
+          env:
+            - name: TestConfigKey
+              valueFrom:
+                configMapKeyRef:
+                  name: config-test
+                  key: ConfigKey
+            - name: TestSecretKey
+              valueFrom:
+                secretKeyRef:
+                  name: secret-test
+                  key: SecretKey
