@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-test
+data:
+  # property-like keys; each key maps to a simple value
+  code: "123"
+  name: "Caner"
+
+  # file-like keys
+  properties: |
+    test.key1=testKey1
+    test.key2=testKey2
+  properties2: |
+    key1=keyValue1
+    key2=keyValue2  
