@@ -1,0 +1,63 @@
+# https://docs.gitlab.com/ee/ci/yaml/index.html
+
+variables:
+  DEPLOY_SITE: "http://localhost"
+  CAN_BUILD: "YES"
+  RUN_BUILD: "YES"
+
+stages:         
+  - build
+  - test
+  - deploy
+
+build-job:      
+  extends: .build-job-extention
+  variables:
+    CAN_BUILD_VARIABLE: $CAN_BUILD
+    TEST_VARIABLE_LOCAL: $TEST_VARIABLE 
+    DEPLOY_SITE_VARIABLE: $DEPLOY_SITE
+  rules:
+    - if: $RUN_BUILD == "YES"
+
+.build-job-extention:
+  stage: build
+  script:
+    - echo "Compiling the code..."
+    - echo "Compile complete."
+    - echo $TEST_VARIABLE_LOCAL
+    - echo $DEPLOY_SITE_VARIABLE
+    - echo "Can buildable; $CAN_BUILD_VARIABLE"
+  before_script:
+    - echo "Before script start."
+    - if [ "$CAN_BUILD_VARIABLE" == "YES" ]; then echo "yes can build."; else exit 1; fi
+    # exit 1 for failure
+    # exit 0 for success
+    - echo "Before script done."
+  after_script:
+    - echo "After script."
+  
+unit-test-job:   
+  stage: test    
+  script:
+    - echo "Running unit tests... This will take about 5 seconds."
+    - sleep 5
+    - echo "Code coverage is 90%"
+  when: always
+  needs: [build-job]
+
+lint-test-job:   
+  stage: test    
+  script:
+    - echo "Linting code... This will take about 3 seconds."
+    - sleep 3
+    - echo "No lint issues found."
+  when: manual
+  needs: [build-job]
+
+deploy-job:      
+  stage: deploy  
+  script:
+    - echo "Deploying application..."
+    - echo "Application successfully deployed."
+  when: manual
+  needs: [lint-test-job]
