@@ -9,6 +9,17 @@ stages:
   - build
   - test
   - deploy
+  - k8s
+  
+k8s-job:
+  stage: k8s
+  image:
+    name: wernight/kubectl
+    entrypoint: [""]
+  before_script:
+    - mkdir -p ~/.kube && cp $K8S_CONFIG ~/.kube/config
+  script:
+    - kubectl get nodes
 
 build-job:      
   extends: .build-job-extention
