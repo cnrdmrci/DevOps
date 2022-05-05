@@ -66,6 +66,11 @@ kubectl logs [pod-name]
 kbuectl describe pod [pod-name]
 ```
 
+## Config
+```bash
+kubectl config view --flatten=true
+```
+
 # Pod Terminal
 
 ```bash
